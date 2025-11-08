@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore UAE Heritage — Food</title>
+
+    <!-- Keep using the shared header/banner/background styles -->
+    <link rel="stylesheet" href="header-banner.css">
+
+    <style>
+        :root {
+            --sand: #C2A57A;
+            --sand-dark: #A67C52;
+            --sand-light: #EAD9C4;
+            --ink: #2e2a28;
+            --card: #ffffff;
+        }
+
+
+        .banner {
+            position: relative;
+            background-image: url('food-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #fff;
+            text-align: center;
+            padding: 4rem 1.5rem;
+        }
+
+        .banner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .45);
+            /* readability overlay */
+        }
+
+        .banner .overlay {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .banner .btn {
+            background: var(--sand);
+            color: #fff;
+            padding: .8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+            transition: background .2s;
+        }
+
+        .banner .btn:hover {
+            background: var(--sand-dark);
+        }
+
+        /* Media */
+        img,
+        video {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* Layout helpers */
+        .wrap {
+            width: min(1100px, 92vw);
+            margin: 0 auto;
+        }
+
+        /* Sections */
+        .section {
+            padding: 1rem 0 2.25rem;
+        }
+
+        .section h2 {
+            font-size: clamp(1.4rem, 2.6vw, 2rem);
+            margin: 0 0 1rem;
+            letter-spacing: .3px;
+        }
+
+        /* Signature dishes grid */
+        .grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(12, 1fr);
+        }
+
+        .dish-card {
+            grid-column: span 12;
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 24px #0001;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            transition: translate .2s, box-shadow .2s;
+        }
+
+        .dish-card:hover {
+            translate: 0 -2px;
+            box-shadow: 0 16px 28px #0002;
+        }
+
+        .dish-img {
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+
+        .dish-body {
+            padding: 1rem 1rem 1.1rem;
+        }
+
+        .dish-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: .5rem;
+        }
+
+        .tag {
+            background: var(--sand-light);
+            color: #5a4634;
+            padding: .18rem .5rem;
+            border-radius: .5rem;
+            font-size: .72rem;
+        }
+
+        @media (min-width:640px) {
+            .dish-card {
+                grid-column: span 6;
+            }
+        }
+
+        @media (min-width:960px) {
+            .dish-card {
+                grid-column: span 3;
+            }
+        }
+
+        /* Video carousel (scroll-snap only, no arrows) */
+        .carousel {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: 80%;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: .5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .carousel::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .carousel::-webkit-scrollbar-thumb {
+            background: #c7b39a;
+            border-radius: 999px;
+        }
+
+        .slide {
+            scroll-snap-align: start;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            min-height: 260px;
+        }
+
+        .slide video,
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide .caption {
+            position: absolute;
+            left: .8rem;
+            bottom: .8rem;
+            background: #000a;
+            color: #fff;
+            padding: .35rem .55rem;
+            border-radius: .5rem;
+            font-size: .85rem;
+        }
+
+        /* Quiz popup (button styles already covered by .banner .btn) */
+        .popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .6);
+            z-index: 100;
+        }
+
+        .popup-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            margin: 10% auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Uniform image sizing for Signature Dishes */
+.image-card {
+  width: 100%;
+  aspect-ratio: 4 / 3;            /* consistent image ratio (change to 1/1 for squares) */
+  overflow: hidden;               /* crop overflow */
+  border-radius: 16px 16px 0 0;   /* match .dish-card rounding */
+  cursor: pointer;
+}
+
+.image-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;              /* keeps center focus and fills area */
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Optional: slight zoom effect on hover */
+.image-card:hover img {
+  transform: scale(1.05);
+}
+
+    </style>
+</head>
+
+<body>
+    <!-- Background overlay div is fine if header-banner.css expects it -->
+    <div class="background-overlay"></div>
+
+    <!-- Header (styled by header-banner.css) -->
+    <header>
+        <h1><a href="code.html" style="color:#fff; text-decoration:none;">Explore UAE Heritage</a></h1>
+        <nav>
+            <ul>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="food.html"><strong>Food</strong></a></li>
+                <li><a href="art-music.html">Art &amp; Music</a></li>
+                <li><a href="historical-places.html">Historical Places</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO BANNER (with your background image) -->
+    <section class="banner">
+        <div class="overlay">
+            <h2>A Taste of Tradition</h2>
+            <p>From fragrant <em>machboos</em> to golden <em>luqaimat</em>, explore the flavors that tell the story of
+                the Emirates — hospitality, family, and the desert’s spice road.</p>
+            <a href="#signature-dishes" class="btn">Explore Dishes</a>
+        </div>
+    </section>
+
+    <main>
+        <!-- SIGNATURE DISHES -->
+        <section class="section wrap" id="signature-dishes">
+            <h2>Signature Dishes</h2>
+            <div class="grid">
+                <article class="dish-card">
+                    <div class="image-card" onclick="window.open('https://www.hungrypaprikas.com/chicken-machboos/')">
+                        <img src="machboos.jpg">
+                    </div>
+                    <div class="dish-body">
+                        <div class="dish-title"><strong>Machboos</strong><span class="tag">Rice • Spices</span></div>
+                        <p>Spiced rice cooked with meat or chicken, dried limes, and saffron — the aroma of a family
+                            gathering.</p>
+                    </div>
+                </article>
+
+                <article class="dish-card">
+                    <div class="image-card" onclick="window.open('https://emiraticankitchen.wordpress.com/2012/07/23/harees/')">
+                        <img src="harees.jpg">
+                    </div>
+                    <div class="dish-body">
+                        <div class="dish-title"><strong>Harees</strong><span class="tag">Wheat • Meat</span></div>
+                        <p>Slow-cooked wheat and meat beaten to a silky texture — a Ramadan and festive classic.</p>
+                    </div>
+                </article>
+
+                <article class="dish-card">
+                    <div class="image-card" onclick="window.open('https://everylittlecrumb.com/luqaimat/')">
+                        <img src="luqaimat.jpeg">
+                    </div>
+                    <div class="dish-body">
+                        <div class="dish-title"><strong>Luqaimat</strong><span class="tag">Dessert</span></div>
+                        <p>Light, crunchy dumplings drizzled with date syrup and sesame — sweet bites of joy.</p>
+                    </div>
+                </article>
+
+                <article class="dish-card">
+                    <div class="image-card" onclick="window.open('https://tarasmulticulturaltable.com/balaleet-emirati-sweet-vermicelli-egg-omelet/')">
+                        <img src="balaleet.jpg">
+                    </div>
+                    <div class="dish-body">
+                        <div class="dish-title"><strong>Balaleet</strong><span class="tag">Breakfast</span></div>
+                        <p>Sweet saffron vermicelli paired with a thin omelette — a favorite morning comfort.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Single quiz banner (removed duplicate banner to avoid repetition) -->
+    <section class="banner">
+        <div class="overlay">
+            <h2>Test Your Knowledge of Emirati Food!</h2>
+            <p>Think you know the flavors of the Emirates? Take a quick quiz to explore traditional dishes, ingredients,
+                and culinary customs that make Emirati cuisine unique and full of heritage.</p>
+            <button class="btn" id="quizBtn">Take the Quiz</button>
+        </div>
+    </section>
+
+    <!-- Quiz Popup (Food) -->
+    <div id="quizPopup" class="popup" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+        <div class="popup-content">
+            <span class="close" aria-label="Close quiz">&times;</span>
+            <h3 id="quizTitle">Emirati Food Quiz</h3>
+
+            <form id="quizForm">
+                <label>1) Which Emirati dessert is made of fried dough balls drizzled with date syrup?</label><br />
+                <input type="radio" name="q1" value="luqaimat"> Luqaimat<br />
+                <input type="radio" name="q1" value="balaleet"> Balaleet<br />
+                <input type="radio" name="q1" value="khabeesa"> Khabeesa<br /><br />
+
+                <label>2) Which main grain is used to make Harees?</label><br />
+                <input type="radio" name="q2" value="rice"> Rice<br />
+                <input type="radio" name="q2" value="wheat"> Wheat<br />
+                <input type="radio" name="q2" value="barley"> Barley<br /><br />
+
+                <label>3) Which spice gives machboos its golden color and aroma?</label><br />
+                <input type="radio" name="q3" value="saffron"> Saffron<br />
+                <input type="radio" name="q3" value="paprika"> Paprika<br />
+                <input type="radio" name="q3" value="coriander"> Coriander<br /><br />
+
+                <button type="button" id="submitQuiz" class="btn">Submit</button>
+            </form>
+
+            <p id="quizResult"></p>
+        </div>
+    </div>
+
+    <script>
+        // ===== Food Quiz popup =====
+        const quizBtn = document.getElementById("quizBtn");
+        const quizPopup = document.getElementById("quizPopup");
+        const closeBtn = document.querySelector(".close");
+        const submitQuiz = document.getElementById("submitQuiz");
+        const result = document.getElementById("quizResult");
+
+        if (quizBtn) quizBtn.onclick = () => quizPopup.style.display = "block";
+        if (closeBtn) closeBtn.onclick = () => quizPopup.style.display = "none";
+        window.addEventListener("click", (e) => { if (e.target === quizPopup) quizPopup.style.display = "none"; });
+
+        if (submitQuiz) {
+            submitQuiz.onclick = () => {
+                let score = 0;
+                // Correct answers for FOOD quiz
+                const answers = { q1: "luqaimat", q2: "wheat", q3: "saffron" };
+                for (const q in answers) {
+                    const selected = document.querySelector(`input[name="${q}"]:checked`);
+                    if (selected && selected.value === answers[q]) score++;
+                }
+                result.textContent = `You got ${score}/3 correct!`;
+            };
+        }
+
+        /* Your separate on-page food quiz code can remain below if you use it */
+    </script>
+
+</body>
+
+</html>
