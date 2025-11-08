@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore UAE Heritage</title>
+    <link rel="stylesheet" href="header-banner.css">
+    <style>
+        .section.wrap h2 {
+            text-align: center;
+            color: var(--sand-dark);
+            margin-bottom: 40px;
+        }
+        
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .popup-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            margin: 10% auto;
+            text-align: left;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            background: #386cd5;
+            color: #fff;
+            padding: .8rem 1.6rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: background .3s ease, transform .2s ease;
+        }
+
+        .btn:hover {
+            background: #800097;
+            transform: translateY(-2px);
+        }
+
+        /* --- Culture Section Layout --- */
+        .culture-section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+
+        .culture-row {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            /* text left, image right */
+            align-items: center;
+            gap: 2rem;
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        /* second row flips: image left, text right */
+        .culture-row.alt {
+            grid-template-columns: 1fr 1.1fr;
+        }
+
+        .culture-row .copy h3 {
+            margin: 0 0 0.5rem;
+            font-size: clamp(1.25rem, 2.2vw, 1.8rem);
+            color: var(--ink, #2e2a28);
+        }
+
+        .culture-row .copy p {
+            margin: 0;
+            line-height: 1.75;
+            color: var(--ink, #2e2a28);
+            opacity: 0.9;
+        }
+
+        .culture-row .media {
+            margin: 0;
+        }
+
+        .culture-row .media img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            background: var(--sand-light, #EAD9C4);
+            object-fit: cover;
+        }
+
+        /* Mobile: stack image and text */
+        @media (max-width: 900px) {
+
+            .culture-row,
+            .culture-row.alt {
+                grid-template-columns: 1fr;
+            }
+
+            /* Keep your requested order:
+       Row 1: text then image
+       Row 2: image then text
+       Row 3: text then image (default) */
+            .culture-row .copy {
+                order: 1;
+            }
+
+            .culture-row .media {
+                order: 2;
+            }
+
+            .culture-row.alt .media {
+                order: 1;
+            }
+
+            .culture-row.alt .copy {
+                order: 2;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <header>
+        <h1>
+            <a href="code.html" style="color: white; text-decoration: none;">
+                Explore UAE Heritage
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="food.html">Food</a></li>
+                <li><a href="art-music.html">Art & Music</a></li>
+                <li><a href="historical-places.html">Historical Places</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Culture of the UAE</h2>
+        <!-- Culture Highlights -->
+        <section id="culture-highlights" class="culture-section">
+            <!-- 1) UAE National Day -->
+            <article class="culture-row">
+                <div class="copy">
+                    <h3>UAE National Day</h3>
+                    <p>
+                        Celebrated each year to mark the union of the Emirates, National Day is a time of
+                        parades, flags, traditional performances, and family gatherings. It highlights unity,
+                        pride, and the country’s cultural heritage—from songs and poetry to traditional dress.
+                    </p>
+                </div>
+                <figure class="media">
+                    <img src="national-day.jpg" alt="UAE National Day flags and celebrations" loading="lazy">
+                </figure>
+            </article>
+
+            <!-- 4) Falconry -->
+            <article class="culture-row alt">
+                <figure class="media">
+                    <video autoplay muted loop playsinline width="100%" height="400">
+                        <source src="falconry.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </figure>
+                <div class="copy">
+                    <h3>Falconry</h3>
+                    <p>
+                        Falconry is one of the UAE’s oldest traditions, symbolizing strength, patience, and deep respect
+                        for nature. Passed down through generations, it represents a unique bond between humans and
+                        birds
+                        of prey and remains a celebrated heritage sport recognized by UNESCO.
+                    </p>
+                </div>
+            </article>
+
+            <!-- 5) Henna Art -->
+            <article class="culture-row">
+                <div class="copy">
+                    <h3>Henna Art</h3>
+                    <p>
+                        Henna holds a special place in Emirati culture, used to decorate hands and feet during weddings
+                        and festivals. The intricate designs are symbols of beauty, joy, and blessings, reflecting
+                        centuries-old artistic traditions that continue to thrive in modern celebrations.
+                    </p>
+                </div>
+                <figure class="media">
+                    <img src="henna.jpg" alt="Traditional Emirati henna art on hands" loading="lazy">
+                </figure>
+            </article>
+
+            <!-- 6) Traditional Dhow Boats -->
+            <article class="culture-row alt">
+                <figure class="media">
+                    <img src="dhow-boats.jpg" alt="Traditional Dhow Boats" loading="lazy">
+                </figure>
+                <div class="copy">
+                    <h3>Traditional Dhow Boats</h3>
+                    <p>
+                        The wooden dhow represents the UAE’s maritime heritage. Once used for pearl diving and trade
+                        across the Arabian Gulf, it reflects the Emirati spirit of exploration and craftsmanship.
+                        Today, restored dhows stand as proud symbols of the nation’s seafaring history.
+                    </p>
+                </div>
+            </article>
+
+            <!-- 3) Emirati Coffee (Gahwa) -->
+            <article class="culture-row">
+                <div class="copy">
+                    <h3>Gahwa</h3>
+                    <p>
+                        Gahwa—light Arabic coffee often flavored with cardamom—is traditionally served in a
+                        <em>dallah</em> and poured into small cups (<em>finjān</em>). Offering coffee to guests is a
+                        warm gesture of hospitality and respect at the heart of Emirati social life.
+                    </p>
+                </div>
+                <figure class="media">
+                    <img src="gahwa.jpg" alt="Emirati gahwa served in a dallah with finjān cups" loading="lazy">
+                </figure>
+            </article>
+
+            <!-- 2) Al-Ayyala Traditional Dance -->
+            <article class="culture-row alt">
+                <figure class="media">
+                    <video autoplay muted loop playsinline width="100%" height="400">
+                        <source src="ayyala.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </figure>
+                <div class="copy">
+                    <h3>Al-Ayyala</h3>
+                    <p>
+                        Al-Ayyala is a well-known group performance where rows of men move in unison to drums and
+                        chanted poetry, symbolizing community, courage, and celebration. You’ll often see it at
+                        national events, weddings, and cultural festivals across the Emirates.
+                    </p>
+                </div>
+            </article>
+
+        </section>
+
+    </main>
+
+    <!-- Banner -->
+    <section class="banner">
+        <div class="overlay">
+            <h2>Test Your Knowledge of UAE Culture!</h2>
+            <p>Think you know the Emirates? Challenge yourself with a quick quiz and discover more about the UAE’s
+                traditions, values, and way of life.</p>
+            <button class="btn" id="quizBtn">Take the Quiz</button>
+        </div>
+    </section>
+
+    <!-- Quiz Popup -->
+    <div id="quizPopup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <h3>UAE Culture Quiz</h3>
+            <form id="quizForm">
+                <label>1. Which festival marks the founding of the United Arab Emirates?</label><br>
+                <input type="radio" name="q1" value="national_day"> National Day<br>
+                <input type="radio" name="q1" value="eid_al_fitr"> Eid Al Fitr<br>
+                <input type="radio" name="q1" value="flag_day"> Flag Day<br><br>
+
+                <label>2. Which traditional dance is famous in the UAE?</label><br>
+                <input type="radio" name="q2" value="al_ayyala"> Al-Ayyala<br>
+                <input type="radio" name="q2" value="dabke"> Dabke<br>
+                <input type="radio" name="q2" value="flamenco"> Flamenco<br><br>
+
+                <label>3. What is the traditional Emirati coffee called?</label><br>
+                <input type="radio" name="q3" value="gahwa"> Gahwa<br>
+                <input type="radio" name="q3" value="karak"> Karak<br>
+                <input type="radio" name="q3" value="espresso"> Espresso<br><br>
+
+                <button type="button" id="submitQuiz" class="btn">Submit</button>
+            </form>
+            <p id="quizResult"></p>
+        </div>
+    </div>
+
+    <!-- JS for Popup and Quiz -->
+    <script>
+        const quizBtn = document.getElementById("quizBtn");
+        const quizPopup = document.getElementById("quizPopup");
+        const closeBtn = document.querySelector(".close");
+        const submitQuiz = document.getElementById("submitQuiz");
+        const result = document.getElementById("quizResult");
+
+        quizBtn.onclick = () => quizPopup.style.display = "block";
+        closeBtn.onclick = () => quizPopup.style.display = "none";
+        window.onclick = (e) => { if (e.target === quizPopup) quizPopup.style.display = "none"; };
+
+        submitQuiz.onclick = () => {
+            let score = 0;
+            const answers = { q1: "national_day", q2: "al_ayyala", q3: "gahwa" };
+            for (const q in answers) {
+                const selected = document.querySelector(`input[name="${q}"]:checked`);
+                if (selected && selected.value === answers[q]) score++;
+            }
+            result.textContent = `You got ${score}/3 correct!`;
+        };
+    </script>
+
+</body>
+
+</html>
