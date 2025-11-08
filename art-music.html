@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore UAE Heritage</title>
+    <link rel="stylesheet" href="header-banner.css">
+    <style>
+        .section.wrap {
+            padding: 60px 10%;
+            background: #fff;
+        }
+
+        .section.wrap h2 {
+            text-align: center;
+            color: var(--sand-dark);
+            margin-bottom: 40px;
+        }
+
+        .art-block {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .art-block.alt {
+            flex-direction: row-reverse;
+        }
+
+        .art-block img {
+            width: 45%;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+        }
+
+        .art-block .text {
+            flex: 1;
+        }
+
+        .art-block h3 {
+            margin: 0 0 10px;
+            color: var(--ink);
+        }
+
+        .art-block p,
+        .art-block ul {
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .media-rail {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 16px;
+        }
+
+        .media-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        .media-card img,
+        .media-card video,
+        .media-card audio {
+            width: 100%;
+            display: block;
+        }
+
+        .media-card audio {
+            width: 100%;
+        }
+
+        .media-card figcaption {
+            font-size: .9rem;
+            color: #555;
+            padding: 10px 12px;
+            background: #faf7f2;
+            border-top: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        .lyric-box summary {
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: 600;
+            color: var(--sand-dark);
+        }
+
+        .lyrics {
+            padding: 10px 0 0;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+    <header>
+        <h1>
+            <a href="code.html" style="color: white; text-decoration: none;">
+                Explore UAE Heritage
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="food.html">Food</a></li>
+                <li><a href="art-music.html">Art & Music</a></li>
+                <li><a href="historical-places.html">Historical Places</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+    <!-- Art & Music Page Content WITH MEDIA -->
+    <section id="art-music" class="section wrap">
+        <h2>Art & Music of the UAE</h2>
+
+        <!-- 1) Traditional Dances (Men & Women) -->
+        <article class="art-block">
+            <img src="ayaladance.jpg" alt="Al-Ayyala traditional dance">
+            <div class="text">
+                <h3>Traditional Dances</h3>
+                <p>
+                    Dance is a living expression of Emirati pride and heritage.
+                    Men often perform Al-Ayyala/Yowlah in rhythmic rows with bamboo canes to drums and chants.
+                    Women perform graceful dances such as Al-Nashat and Al-Ruwahi, with flowing abayas and expressive
+                    hair movements during celebrations.
+                </p>
+
+                <!-- Media: Men & Women dances -->
+                <div class="media-rail">
+                    <figure class="media-card">
+                        <video autoplay muted loop playsinline preload="metadata" poster="ayyala-thumb.jpg">
+                            <source src="ayalahdance.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <figcaption>Men’s dance — Al-Ayyala</figcaption>
+                    </figure>
+
+                    <figure class="media-card">
+                        <video autoplay muted loop playsinline preload="metadata" poster="nashat-thumb.jpg">
+                            <source src="nashat-women.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <figcaption>Women’s dance — Al-Nashat</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </article>
+
+        <!-- 2) National Anthem -->
+        <article class="art-block alt">
+            <img src="uae-anthem.jpg" alt="UAE National Anthem">
+            <div class="text">
+                <h3>The National Anthem — <em>Ishy Bilady</em></h3>
+                <p>
+                    Officially adopted in 1971. Music by Mohammed Abdel Wahab.
+                    Lyrics added in 1986 by Emirati poet Arif Al Sheikh Abdullah Al Hassan.
+                </p>
+
+                <!-- Media: Audio + Lyrics -->
+                <div class="media-rail">
+                    <figure class="media-card audio">
+                        <audio controls preload="metadata">
+                            <source src="anthem.mp3" type="audio/mpeg">
+                            <source src="anthem.ogg" type="audio/ogg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <figcaption>UAE National Anthem — Audio</figcaption>
+                    </figure>
+
+                    <figure class="media-card">
+                        <video autoplay muted loop playsinline preload="metadata" poster="anthem-orchestra.jpg">
+                            <source src="anthem-orchestral.mp4" type="video/mp4">
+                        </video>
+                        <figcaption>Orchestral rendition</figcaption>
+                    </figure>
+                </div>
+
+                <details class="lyric-box">
+                    <summary>Show anthem lyrics (Arabic)</summary>
+                    <div class="lyrics">
+                        <p><strong>Arabic:</strong><br>
+                            عِيشِي بِلَادِي عَاشَ اتِّحَادُ إِمَارَاتِنَا
+                            عِشْتِ لِشَعبٍ
+                            دِينُهُ الْإِسْلَامُ هَدْيُهُ القُرْآن
+                            حَصَّنْتُكَ بِاسْمِ الله يَا وَطَنُ
+                            بِلَادِي بِلَادِي بِلَادِي بِلَادِي
+                            حَمَاكِ الْإِلَهُ شُرُورَ الزَّمَان
+                            أَقْسَمْنَا أَنْ نَبْنِيَ نَعْمَل
+                            نَعْمَل نُخْلِص نَعْمَل نُخْلِص
+                            مَهْمَا عِشْنَا نُخْلِصْ نُخْلِصْ
+                            دَامَ الْأَمَانُ وَعَاشَ الْعَلَم يَا إِمَارَاتِنَا
+                            رَمْزَ الْعُرُوبَة
+                            كُلُّنَا نَفْدِيكِ بِالدِّمَاء نَرْوِيكِ
+                            نَفْدِيكَ بِالْأَرْوَاحِ يَا وَطَن</p>
+                    </div>
+                </details>
+            </div>
+        </article>
+
+        <!-- 3) The UAE Flag -->
+        <article class="art-block">
+            <img src="uae-flag.jpg" alt="UAE Flag">
+            <div class="text">
+                <h3>The UAE Flag</h3>
+                <p>
+                    Designed in 1971 by Abdullah Mohammed Al Maainah.
+                    Raised on December 2, 1971 (UAE National Day).
+                </p>
+                <ul>
+                    <li><strong>Red</strong> — Courage & sacrifice</li>
+                    <li><strong>Green</strong> — Growth & prosperity</li>
+                    <li><strong>White</strong> — Peace & honesty</li>
+                    <li><strong>Black</strong> — Strength & triumph over injustice</li>
+                </ul>
+
+                <!-- Media: Waving flag + infographic -->
+                <div class="media-rail">
+                    <figure class="media-card">
+                        <video autoplay muted loop playsinline preload="metadata" poster="flag-wave.jpg">
+                            <source src="uae-flag-wave.mp4" type="video/mp4">
+                        </video>
+                        <figcaption>Waving flag</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </article>
+
+        <!-- 4) Emirati Artists -->
+        <article class="art-block alt">
+            <img src="emirati-artist-painting.jpg" alt="Emirati Art Gallery">
+            <div class="text">
+                <h3>Emirati Artists</h3>
+                <p>
+                    Pioneers include Abdul Qader Al Rais (watercolors, calligraphy + abstraction)
+                    and Najat Makki (vivid color fields and symbolism). Contemporary art thrives in
+                    venues like <em>Alserkal Avenue</em>, <em>Manarat Al Saadiyat</em>, and national museums.
+                </p>
+
+                <!-- Media: Mini gallery -->
+                <div class="media-rail">
+                    <figure class="media-card">
+                        <img src="al-rais-1.jpeg" alt="Abdul Qader Al Rais painting">
+                        <figcaption>Al Rais — Watercolor</figcaption>
+                    </figure>
+                    <figure class="media-card">
+                        <img src="najat-makki-1.jpg" alt="Najat Makki painting">
+                        <figcaption>Najat Makki — Abstract</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </article>
+
+        <!-- 5) Emirati Singers -->
+        <article class="art-block">
+            <img src="emirati-singer.jpg" alt="Emirati singer performing">
+            <div class="text">
+                <h3>Emirati Singers & Songs</h3>
+                <p>
+                    Hussain Al Jassmi (e.g., <em>Boshret Kheir</em>, <em>Foq</em>),
+                    Ahlam Al Shamsi, Balqees Fathi, and Mehad Hamad
+                    blend traditional melodies with modern arrangements.
+                </p>
+
+                <!-- Media: Audio players (samples) -->
+                <div class="media-rail">
+                    <figure class="media-card audio">
+                        <audio controls preload="metadata">
+                            <source src="hussain-aljassmi-sample.mp3" type="audio/mpeg">
+                        </audio>
+                        <figcaption>Hussain Al Jassmi - Ballagh Habibak</figcaption>
+                    </figure>
+
+                    <figure class="media-card audio">
+                        <audio controls preload="metadata">
+                            <source src="ahlam-sample.mp3" type="audio/mpeg">
+                        </audio>
+                        <figcaption>Ahlam - Wayak Wayak</figcaption>
+                    </figure>
+
+                    <figure class="media-card audio">
+                        <audio controls preload="metadata">
+                            <source src="mehad-hamad-sample.mp3" type="audio/mpeg">
+                        </audio>
+                        <figcaption>Mehad Hamad - Bargen Laa7</figcaption>
+                    </figure>
+
+                    <figure class="media-card audio">
+                        <audio controls preload="metadata">
+                            <source src="eida-almenhali-sample.mp3" type="audio/mpeg">
+                        </audio>
+                        <figcaption>Eida Al Menhali - Qmrah</figcaption>
+                    </figure>
+
+                </div>
+            </div>
+        </article>
+    </section>
+    </main>
+
+</body>
+
+</html>
