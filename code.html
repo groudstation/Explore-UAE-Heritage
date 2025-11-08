@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore UAE Heritage</title>
+    <link rel="stylesheet" href="header-banner.css">
+    <style>
+
+        /* Image cards */
+        .image-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 3rem;
+        }
+
+        .image-card {
+            background: rgba(255, 255, 255, .15);
+            border-radius: 12px;
+            overflow: hidden;
+            width: 250px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .2);
+            transition: transform .3s ease, box-shadow .3s ease;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform .3s ease;
+        }
+
+        .image-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .25);
+        }
+
+        .image-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .image-card p {
+            padding: .8rem;
+            background: rgba(0, 0, 0, .6);
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .image-card video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover video {
+            transform: scale(1.1);
+        }
+
+
+        /* Info block */
+        .info-section {
+            background: rgba(0, 0, 0, .55);
+            color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem auto;
+            max-width: 900px;
+            line-height: 1.8;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            background: #d59638;
+            color: #fff;
+            padding: .8rem 1.6rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: bold;
+            transition: background .3s ease, transform .2s ease;
+        }
+
+        .btn:hover {
+            background: #009739;
+            transform: translateY(-2px);
+        }
+
+        /* === Calendar Section (smaller + sand palette) === */
+        .calendar-section {
+            background: rgba(255, 255, 255, 0.9);
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border-radius: 12px;
+            max-width: 900px;
+            /* smaller block */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .12);
+            text-align: center;
+        }
+
+        .calendar-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.25rem;
+            /* tighter gap */
+            margin-top: 1.25rem;
+        }
+
+        /* Calendar box (smaller) */
+        .calendar {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, .08);
+            padding: .75rem;
+            width: 280px;
+            /* was 350px */
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: .6rem;
+        }
+
+        .calendar-header button {
+            background: var(--sand-dark);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: .25rem .55rem;
+            cursor: pointer;
+            transition: filter .2s ease, transform .05s ease;
+        }
+
+        .calendar-header button:hover {
+            filter: brightness(1.05);
+        }
+
+        .calendar-header button:active {
+            transform: translateY(1px);
+        }
+
+        .calendar-header h3 {
+            color: var(--ink);
+            margin: 0;
+            font-size: 1.05rem;
+            /* smaller title */
+            letter-spacing: .2px;
+        }
+
+        /* Table sizes + colors */
+        .calendar table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .calendar th {
+            background: var(--sand-dark);
+            color: #fff;
+            padding: .4rem;
+            font-size: .85rem;
+            /* smaller labels */
+            letter-spacing: .3px;
+        }
+
+        .calendar td {
+            padding: .55rem;
+            /* smaller cells */
+            text-align: center;
+            border: 1px solid #eee;
+            cursor: default;
+            color: var(--ink);
+            background: #fff;
+            font-size: .9rem;
+            transition: background .15s ease, color .15s ease;
+        }
+
+        .calendar td:hover {
+            background: rgba(198, 165, 122, .18);
+            /* translucent sand hover */
+        }
+
+        /* Highlights */
+        .calendar td.today {
+            background: var(--accent-red);
+            color: #fff;
+        }
+
+        .calendar td.event-day {
+            background: var(--sand);
+            color: #fff;
+        }
+
+        /* === Event List (light card, no black) === */
+        .event-list {
+            background: #fff;
+            /* no more black */
+            color: var(--ink);
+            border-radius: 10px;
+            padding: 1rem;
+            width: 280px;
+            /* was 350px */
+            box-shadow: 0 3px 10px rgba(0, 0, 0, .08);
+            text-align: left;
+            border: 1px solid var(--sand-light);
+            /* subtle frame */
+            position: relative;
+        }
+
+        .event-list::before {
+            /* sand accent bar */
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--sand-dark);
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+
+        .event-list h3 {
+            text-align: center;
+            margin-bottom: .7rem;
+            color: var(--sand-dark);
+            font-weight: 700;
+        }
+
+        .event-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .event-list li {
+            margin-bottom: .7rem;
+            line-height: 1.45;
+        }
+
+        .event-list li strong {
+            color: #5a4a3d;
+        }
+
+        /* Hint text */
+        .muted {
+            opacity: .75;
+            font-size: .88rem;
+        }
+
+        /* Responsive tweak */
+        @media (max-width:768px) {
+            .calendar-section {
+                max-width: 95%;
+                padding: 1.1rem;
+            }
+
+            .calendar,
+            .event-list {
+                width: 100%;
+                max-width: 360px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header>
+        <h1>
+            <a href="code.html" style="color: white; text-decoration: none;">
+                Explore UAE Heritage
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="food.html">Food</a></li>
+                <li><a href="art-music.html">Art & Music</a></li>
+                <li><a href="historical-places.html">Historical Places</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner">
+        <div class="overlay">
+            <h2>Excited to learn more about the UAE?</h2>
+            <p>Discover the traditions, history, and architecture of the Emirates through interactive experiences.
+                Explore the essence of Emirati heritage — from attire and food to crafts and historical landmarks.</p>
+            <a href="culture.html" class="btn">Start Exploring</a>
+        </div>
+    </section>
+
+    <!-- Main -->
+    <main>
+        <h2>About Our Platform</h2>
+
+        <div class="info-section">
+            <p>Our goal is to conserve and promote Emirati culture by providing an engaging and educational experience.
+                Dive into categories such as Culture, Food, Art, Music, and Historical Places — enhanced with
+                high-quality
+                visuals, cultural insights, and interactive tools like quizzes and virtual tours.</p>
+            <p>Designed for accessibility across all devices, this platform ensures every visitor can enjoy a smooth
+                experience with clean design, clear navigation, and multilingual support.</p>
+        </div>
+
+        <div class="image-row">
+            <div class="image-card" onclick="window.open('https://www.louvreabudhabi.ae/en/buy-ticket/admission')">
+                <img src="louvre museum.jpg" alt="Louvre Museum">
+                <p>Louvre Museum Abu Dhabi</p>
+            </div>
+
+
+            <div class="image-card" onclick="window.open('https://liwainternationalfestival.ae/en/events')">
+                <video autoplay muted loop playsinline width="100%" height="200" poster="liwa-thumbnail.jpg">
+                    <source src="liwa.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <p>Liwa Festival</p>
+            </div>
+
+            <div class="image-card" onclick="window.open('https://www.globalvillage.ae/en/')">
+                <img src="global village dubai.jpg" alt="global village dubai">
+                <p>Global Village Dubai</p>
+            </div>
+        </div>
+
+
+
+        <!-- Calendar -->
+        <section id="events" class="calendar-section" aria-label="Calendar of Events">
+            <h2>Events This Month</h2>
+
+            <div class="calendar-container">
+                <div class="calendar" aria-live="polite">
+                    <div class="calendar-header">
+                        <button id="prevMonth" aria-label="Previous month">&#10094;</button>
+                        <h3 id="monthYear">Month YYYY</h3>
+                        <button id="nextMonth" aria-label="Next month">&#10095;</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Sun</th>
+                                <th scope="col">Mon</th>
+                                <th scope="col">Tue</th>
+                                <th scope="col">Wed</th>
+                                <th scope="col">Thu</th>
+                                <th scope="col">Fri</th>
+                                <th scope="col">Sat</th>
+                            </tr>
+                        </thead>
+                        <tbody id="calendarBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="event-list">
+                    <h3>Upcoming Events 🇦🇪</h3>
+                    <ul id="eventList">
+                        <!-- filled by JS -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        &copy; 2025 Explore UAE Heritage | Celebrating Emirati Culture & Innovation
+    </footer>
+
+    <!-- Scripts at end so DOM exists -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ===== Calendar/Data =====
+            const calendarBody = document.getElementById('calendarBody');
+            const monthYear = document.getElementById('monthYear');
+            const prevBtn = document.getElementById('prevMonth');
+            const nextBtn = document.getElementById('nextMonth');
+            const eventListEl = document.getElementById('eventList');
+
+            // Define events (month is 1-12)
+            const EVENTS = [
+                { m: 10, d: 8, title: "Junior Grand Prix Figure Skating Championship" },
+                { m: 10, d: 13, title: "GITEX GLOBAL" },
+                { m: 10, d: 27, title: "Beautyworld Middle East" },
+                { m: 11, d: 3, title: "UAE Flag Day – Celebrate unity and pride across the nation." },
+                { m: 12, d: 2, title: "UAE National Day – Commemorating the union of the Emirates." },
+                { m: 11, d: 10, title: "Traditional Music Festival – Abu Dhabi Heritage Village." },
+                { m: 11, d: 18, title: "Emirati Cuisine Workshop – Dubai Culture Center." },
+                { m: 11, d: 25, title: "Architecture of the Desert – Sharjah Museum lecture." }
+            ];
+
+            let current = new Date(); // month being displayed
+
+            function eventsFor(month, year) {
+                // Return events in the displayed month (ignoring year for simplicity)
+                return EVENTS.filter(e => e.m === (month + 1))
+                    .sort((a, b) => a.d - b.d);
+            }
+
+            function renderEventsSidebar(month, year) {
+                const items = eventsFor(month, year);
+                eventListEl.innerHTML = items.length
+                    ? items.map(e => `<li><strong>${new Date(year, month, e.d).toLocaleString('en-US', { month: 'short' })} ${e.d}:</strong> ${e.title}</li>`).join('')
+                    : '<li>No listed events this month. Check back soon!</li>';
+            }
+
+            function renderCalendar(date) {
+                const year = date.getFullYear();
+                const month = date.getMonth();        // 0..11
+                const firstDay = new Date(year, month, 1).getDay();  // 0=Sun
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                monthYear.textContent = date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+                calendarBody.innerHTML = '';
+
+                const monthEvents = eventsFor(month, year);
+                const eventDays = new Set(monthEvents.map(e => e.d));
+
+                let row = document.createElement('tr');
+
+                // leading blanks
+                for (let i = 0; i < firstDay; i++) row.appendChild(document.createElement('td'));
+
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const td = document.createElement('td');
+                    td.textContent = day;
+
+                    if (eventDays.has(day)) {
+                        td.classList.add('event-day');
+                        const evt = monthEvents.find(e => e.d === day);
+                        td.title = evt ? evt.title : 'Event';
+                    }
+
+                    const today = new Date();
+                    if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                        td.classList.add('today');
+                    }
+
+                    row.appendChild(td);
+
+                    // wrap each week
+                    if ((firstDay + day) % 7 === 0) {
+                        calendarBody.appendChild(row);
+                        row = document.createElement('tr');
+                    }
+                }
+                if (row.children.length) calendarBody.appendChild(row);
+
+                // Update sidebar for this month
+                renderEventsSidebar(month, year);
+            }
+
+            prevBtn.addEventListener('click', () => { current.setMonth(current.getMonth() - 1); renderCalendar(current); });
+            nextBtn.addEventListener('click', () => { current.setMonth(current.getMonth() + 1); renderCalendar(current); });
+
+            renderCalendar(current);
+        });
+    </script>
+</body>
+
+</html>
