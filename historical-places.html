@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Explore UAE Heritage — Historical Places</title>
+    <link rel="stylesheet" href="header-banner.css">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+    <style>
+        :root {
+            --sand: #C2A57A;
+            --sand-dark: #A67C52;
+            --sand-light: #EAD9C4;
+            --ink: #2e2a28;
+            --card: #ffffff;
+            --muted: #f6f2ec;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Arial, sans-serif;
+            color: var(--ink);
+        }
+
+        header {
+            position: relative;
+            z-index: 5;
+        }
+
+        header h1 a {
+            text-decoration: none
+        }
+
+        /* Layout */
+        .page {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 16px;
+            padding: 80px 6% 40px;
+            /* room for your banner/header */
+        }
+
+        @media (max-width: 980px) {
+            .page {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Map */
+        #uae-map {
+            width: 100%;
+            height: 70vh;
+            min-height: 420px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+            outline: 1px solid rgba(0, 0, 0, .06);
+        }
+
+        /* Info Card */
+        .info-card {
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, .08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-self: start;
+        }
+
+        .info-media {
+            width: 100%;
+            max-height: 250px;
+            /* 👈 controls how tall the image can get */
+            object-fit: cover;
+            /* keeps proportions without stretching */
+            border-radius: 12px;
+            /* optional rounded corners */
+            background: #ddd;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .info-body {
+            padding: 16px 18px 20px;
+        }
+
+        .info-title {
+            margin: 0 0 6px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .info-meta {
+            font-size: .9rem;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .info-text {
+            line-height: 1.55;
+        }
+
+        .legend {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: var(--muted);
+            border-radius: 12px;
+            font-size: .60rem;
+        }
+
+        /* Little badge for Emirate */
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: var(--sand-light);
+            color: #4b3b2b;
+            font-weight: 600;
+            font-size: .86rem;
+        }
+
+        /* Nice Leaflet tweaks */
+        .leaflet-popup-content img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 6px;
+        }
+
+        .leaflet-container a {
+            color: #0d6efd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header>
+        <h1>
+            <a href="code.html" style="color: white; text-decoration: none;">
+                Explore UAE Heritage
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="culture.html">Culture</a></li>
+                <li><a href="food.html">Food</a></li>
+                <li><a href="art-music.html">Art & Music</a></li>
+                <li><a href="historical-places.html">Historical Places</a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+    <main class="page">
+        <!-- MAP -->
+        <section>
+            <div id="uae-map" aria-label="Interactive map of historical places in the UAE"></div>
+        </section>
+
+        <!-- INFO CARD (updates on click) -->
+        <aside class="info-card" id="infoCard" aria-live="polite">
+            <img id="infoImg" class="info-media" src="placeholder-uae.jpg" alt="Selected place image placeholder"
+                width="20%">
+            <div class="info-body">
+                <h3 class="info-title" id="infoTitle">Explore Historical Places</h3>
+                <div class="info-meta">
+                    <span class="badge" id="infoEmirate">UAE</span>
+                </div>
+                <p class="info-text" id="infoText">
+                    Tap a pin on the map to view a photo and a short description of the site.
+                </p>
+
+            </div>
+
+            <div class="legend">
+                Tip: Click a pin for details.
+            </div>
+        </aside>
+    </main>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
+        </script>
+
+    <script>
+        const PLACES = [
+            {
+                id: "qasr-al-hosn",
+                name: "Qasr Al Hosn",
+                emirate: "Abu Dhabi",
+                lat: 24.4856, lng: 54.3540,
+                img: "qasr-al-hosn.jpg",
+                alt: "Qasr Al Hosn fortress in Abu Dhabi",
+                blurb: "The oldest standing stone building in Abu Dhabi, Qasr Al Hosn began as a watchtower in the 18th century and later became the ancestral home of the ruling family."
+            },
+            {
+                id: "al-jahili-fort",
+                name: "Al Jahili Fort",
+                emirate: "Al Ain, Abu Dhabi",
+                lat: 24.2175, lng: 55.7447,
+                img: "al-jahili-fort.jpg",
+                alt: "Al Jahili Fort in Al Ain",
+                blurb: "Built in the 1890s, Al Jahili Fort protected palm groves and caravan routes and today hosts exhibitions celebrating oasis life and regional history."
+            },
+            {
+                id: "jebel-hafeet-tombs",
+                name: "Jebel Hafeet Beehive Tombs",
+                emirate: "Al Ain, Abu Dhabi",
+                lat: 24.0280, lng: 55.7770,
+                img: "jebel-hafeet-tombs.jpg",
+                alt: "Ancient beehive tombs near Jebel Hafeet",
+                blurb: "Over 5,000 years old, these tombs mark early settlement in the region and overlook the dramatic Jebel Hafeet mountain."
+            },
+            {
+                id: "al-fahidi",
+                name: "Al Fahidi Historical Neighbourhood",
+                emirate: "Dubai",
+                lat: 25.2637, lng: 55.2962,
+                img: "al-fahidi.jpg",
+                alt: "Wind towers of Al Fahidi, Dubai",
+                blurb: "A maze of lanes, courtyards, and barjeel wind towers showing Dubai’s traditional architecture by the Creek."
+            },
+            {
+                id: "fujairah-fort",
+                name: "Fujairah Fort",
+                emirate: "Fujairah",
+                lat: 25.1380, lng: 56.3375,
+                img: "fujairah-fort.jpg",
+                alt: "Fujairah Fort on a hill",
+                blurb: "One of the oldest forts in the UAE, built for defense and as a residence for rulers on the Gulf of Oman."
+            },
+            {
+                id: "dhayah-fort",
+                name: "Dhayah Fort",
+                emirate: "Ras Al Khaimah",
+                lat: 25.8298, lng: 56.0530,
+                img: "dhayah-fort.jpg",
+                alt: "Hilltop Dhayah Fort",
+                blurb: "A hilltop stronghold with panoramic views, Dhayah Fort witnessed key 19th-century events in RAK’s history."
+            }
+        ];
+
+        // === Map Init ===
+        const map = L.map('uae-map', { zoomControl: true });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        const bounds = L.latLngBounds([22.6, 51.3], [26.5, 56.7]);
+        map.fitBounds(bounds, { padding: [20, 20] });
+
+        // Marker creation (no popup)
+        function makeMarker(p) {
+            const m = L.circleMarker([p.lat, p.lng], {
+                radius: 8,
+                color: '#7c5a39',
+                weight: 2,
+                fillColor: '#C2A57A',
+                fillOpacity: 0.9
+            });
+            m.on('click', () => updateInfo(p));
+            return m;
+        }
+
+        const layerGroup = L.layerGroup().addTo(map);
+        PLACES.forEach(p => makeMarker(p).addTo(layerGroup));
+
+        // Update the side info card
+        function updateInfo(p) {
+            document.getElementById('infoImg').src = p.img;
+            document.getElementById('infoImg').alt = p.alt;
+            document.getElementById('infoTitle').textContent = p.name;
+            document.getElementById('infoEmirate').textContent = p.emirate;
+            document.getElementById('infoText').textContent = p.blurb;
+        }
+
+        // Optional: default selection
+        // updateInfo(PLACES[0]);
+    </script>
+
+</body>
+
+</html>
